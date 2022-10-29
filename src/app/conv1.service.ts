@@ -21,6 +21,17 @@ export class Conv1Service {
 
   }
 
+  fixUnicodeEquations(text: string): string {
+    // @ts-ignore
+    let t1 = text.replaceAll('⋅', '*')
+        .replaceAll(' ', '')
+        .replaceAll('¦', ' choose ')
+        .replaceAll('log_', 'log')
+        .replaceAll('〖', '').replaceAll('〗', '')
+        ;
+    return t1;
+  }
+
   fixUpBadNotation(text: string): string {
     const tli: string[][] = [
       ['\\{', '\\lbrace'],
@@ -29,7 +40,8 @@ export class Conv1Service {
     ]
 
     for (let tl of tli) {
-      text = text.replace(tl[0], tl[1]);
+      // @ts-ignore
+      text = text.replaceAll(tl[0], tl[1]);
     }
     return text;
   }

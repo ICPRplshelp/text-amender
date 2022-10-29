@@ -5,9 +5,23 @@
 
 
     <div class="ex-background">
+
+      <mat-form-field appearance="fill" style="max-width: 50%;">
+        <mat-label>Option</mat-label>
+        <mat-select [(value)]="currentMode">
+          <mat-option *ngFor="let opt of eqOptions"
+          [value]="opt"
+          >
+        
+          {{upperCaseFirst(opt)}}
+        </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+
       <mat-form-field style="width: 100%; padding: 0px;" class="example-full-width" appearance="fill">
         <mat-label>Enter text here</mat-label>
-        <textarea [(ngModel)]="editableText" matInput placeholder="Stacked-raw MS Word-LaTeX code">
+        <textarea [(ngModel)]="editableText" matInput [placeholder]="hintText">
 
                 </textarea>
 
@@ -24,8 +38,8 @@
 
 
       <button style="width: 100px;"
-              mat-raised-button [cdkCopyToClipboard]="displayText"
-              (click)="displayCopyMessage()"
+              mat-raised-button 
+              (click)="displayCopyMessage()" [cdkCopyToClipboard]="displayText"
       >Copy me!
       </button>
 
@@ -36,16 +50,13 @@
 
 
 
-      <p style="width: min(80%, 400px); padding-top: 23px;">Converts MS Word stacked equations into LaTeX-compatible code.
-        Open a new equation box, set equation mode to LaTeX,
-        select the series of stacked equations you want to copy,
-        hit copy, and paste it in the text box.
-        Then, click on process me.
+      <p style="width: min(80%, 400px); padding-top: 23px;">
+        {{bigHintText}}
 
 
       </p>
       <p>
-        <strong>Equations do not need to be stacked with SHIFT+ENTER.
+        <strong>If you're using the Align option, equations should be stacked with SHIFT+ENTER.
         To minimize errors, I strongly recommend starting each new line with
           an operator. MS Word's copy-paste results are not consistent so expect
           errors.
