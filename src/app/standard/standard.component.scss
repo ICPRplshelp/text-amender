@@ -1,0 +1,38 @@
+.std {
+    padding: 30px;
+
+
+
+}
+
+.example-full-width{
+    width: 200px;
+}
+
+
+.example-form {
+    background-color: #8a8a8a;
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+
+  .mat-input-wrapper {
+    background: gray;
+}
+
+ .ex-background {
+     width: min(80%, 400px);
+   display: flex;
+    flex-direction: column;
+    gap: 5px;
+ }
+
+
+.temp-flex-container {
+    display: flex;
+    flex-direction: column;
+    // gap: 10px;
+}
+
+

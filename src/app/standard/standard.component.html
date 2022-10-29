@@ -1,0 +1,68 @@
+<div class="std">
+  <div class="temp-flex-container">
+
+    <h1>Text converter</h1>
+
+
+    <div class="ex-background">
+      <mat-form-field style="width: 100%; padding: 0px;" class="example-full-width" appearance="fill">
+        <mat-label>Enter text here</mat-label>
+        <textarea [(ngModel)]="editableText" matInput placeholder="Stacked-raw MS Word-LaTeX code">
+
+                </textarea>
+
+        <!-- <input matInput type="text" [(ngModel)]="editableText"> -->
+
+      </mat-form-field>
+      <br>
+      <button mat-raised-button style="width: 120px;"
+              (click)="updateDisplayText()">Process me!
+      </button>
+
+
+      <p> {{displayText}} </p>
+
+
+      <button style="width: 100px;"
+              mat-raised-button [cdkCopyToClipboard]="displayText"
+              (click)="displayCopyMessage()"
+      >Copy me!
+      </button>
+
+      <div *ngIf="copied"
+
+      >Copied!!
+      </div>
+
+
+
+      <p style="width: min(80%, 400px); padding-top: 23px;">Converts MS Word stacked equations into LaTeX-compatible code.
+        Open a new equation box, set equation mode to LaTeX,
+        select the series of stacked equations you want to copy,
+        hit copy, and paste it in the text box.
+        Then, click on process me.
+
+
+      </p>
+      <p>
+        <strong>This program only works for stacked equations stacked
+          with SHIFT+ENTER in Microsoft Word.</strong>
+      </p>
+      <p>
+
+        For Windows users only, make sure <em>copy linear format
+        to the clipboard as plain text</em> is on
+        in your equation settings.
+
+      </p>
+
+      <p>For more information, <a href="https://github.com/ICPRplshelp/text-amender">click here</a>.</p>
+
+
+      <p></p>
+
+
+    </div>
+
+  </div>
+</div>
