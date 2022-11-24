@@ -33,15 +33,17 @@
               (click)="updateDisplayText()">Process me!
       </button>
 
-
-      <p> {{displayText}} </p>
-
-
       <button style="width: 100px;"
               mat-raised-button 
               (click)="displayCopyMessage()" [cdkCopyToClipboard]="displayText"
       >Copy me!
       </button>
+
+
+      <p style="white-space: pre-line"> {{displayText}} </p>
+
+
+      
 
       <div *ngIf="copied"
 
@@ -50,21 +52,15 @@
 
 
 
-      <p style="width: min(80%, 400px); padding-top: 23px;">
+      <p style="width: min(80%, 400px);">
         {{bigHintText}}
 
 
       </p>
-      <p>
-        <strong>If you're using the Align option, equations should be stacked with SHIFT+ENTER.
-        To minimize errors, I strongly recommend starting each new line with
-          an operator. MS Word's copy-paste results are not consistent so expect
-          errors.
-        </strong>
-      </p>
+ 
       <p>
 
-        For Windows users only, make sure <em>copy linear format
+        MS Word-related conversions: For Windows users only, make sure <em>copy linear format
         to the clipboard as plain text</em> is on
         in your equation settings.
 
