@@ -17,7 +17,7 @@ export class Conv1Service {
     let t2 = text.replaceAll('\n', '\\bigm').split("\\bigm");
     let t3 = t2.map(s => `& ${this.fixUpBadNotation(s)} \\\\`);
     let t4 = t3.join('\n');
-    return "\\begin{align*}\n" + t4 + "\n\\end{align*}\n";
+    return "$$\\begin{aligned}\n" + t4 + "\n\\end{aligned}$$\n";
 
   }
 
@@ -97,10 +97,10 @@ export class Conv1Service {
     cStr += (strIndent + "\n# EPILOGUE ---------- #\n");
     toSave.reverse();
     for(let i of toSave){
-      cStr += (strIndent + `sw $s${i}, 0($sp)  # load back $sp${i}\n` + strIndent + `addi $sp, $sp, 4\n`); 
+      cStr += (strIndent + `lw $s${i}, 0($sp)  # load back $sp${i}\n` + strIndent + `addi $sp, $sp, 4\n`); 
     }
 
-    cStr += (strIndent + "sw $ra, 0($sp)  # load back the return address\n" + strIndent + "addi $sp, $sp, 4\n");
+    cStr += (strIndent + "lw $ra, 0($sp)  # load back the return address\n" + strIndent + "addi $sp, $sp, 4\n");
 
     return cStr;
   }
