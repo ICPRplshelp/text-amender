@@ -21,7 +21,7 @@
 
       <mat-form-field style="width: 100%; padding: 0px;" class="example-full-width" appearance="fill">
         <mat-label>Enter text here</mat-label>
-        <textarea [(ngModel)]="editableText" matInput [placeholder]="hintText">
+        <textarea (keydown)="onKeydown($event)" [(ngModel)]="editableText" matInput [placeholder]="hintText">
 
                 </textarea>
 
@@ -40,7 +40,7 @@
       </button>
 
 
-      <p style="white-space: pre-line"> {{displayText}} </p>
+      <p style="white-space: pre-line" class="css-box"> {{displayText}} </p>
 
 
       
@@ -66,7 +66,8 @@
 
       </p>
 
-      <p>For more information, <a href="https://github.com/ICPRplshelp/text-amender">click here</a>.</p>
+
+      <p>Use Page Up and Page Down to scroll between options. For more information, <a href="https://github.com/ICPRplshelp/text-amender">click here</a>. Use the copy me button instead of trying to copy it yourself.</p>
 
 
       <p></p>

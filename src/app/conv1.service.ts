@@ -27,7 +27,12 @@ export class Conv1Service {
         .replaceAll(' ', '')
         .replaceAll('¦', ' choose ')
         .replaceAll('log_', 'log')
-        .replaceAll('〖', '').replaceAll('〗', '')
+        .replaceAll('〖', '(').replaceAll('〗', ')')
+        .replaceAll('█', '')
+        .replaceAll('@', '')
+        .replace(/\)\d+/g, function(match) {
+          return ")*" + match.slice(1);
+        })
         ;
     return t1;
   }
@@ -85,24 +90,69 @@ export class Conv1Service {
 
 
   saveMe(toSave: number[]): string {
-    const strIndent = "    ";
+    const strIndent = "   ";
     toSave.sort();
-    let cStr: string = strIndent + "# PROLOGUE ---------- #\n";
+    let cStr: string = strIndent + "\n";
     cStr += (strIndent + "addi $sp, $sp, -4\n"
-    + strIndent + "sw $ra, 0($sp)  # perserve the return address\n");
+    + strIndent + "sw $ra, 0($sp)\n");
 
     for(let i of toSave){
-      cStr += (strIndent + `addi $sp, $sp, -4\n` + strIndent + `sw $s${i}, 0($sp)  # perserve $sp${i}\n`);
+      cStr += (strIndent + `addi $sp, $sp, -4\n` + strIndent + `sw $s${i}, 0($sp)\n`);
     }
-    cStr += (strIndent + "\n# EPILOGUE ---------- #\n");
+    cStr += (strIndent + "\n\n");
     toSave.reverse();
     for(let i of toSave){
-      cStr += (strIndent + `lw $s${i}, 0($sp)  # load back $sp${i}\n` + strIndent + `addi $sp, $sp, 4\n`); 
+      cStr += (strIndent + `lw $s${i}, 0($sp)\n` + strIndent + `addi $sp, $sp, 4\n`); 
     }
 
-    cStr += (strIndent + "lw $ra, 0($sp)  # load back the return address\n" + strIndent + "addi $sp, $sp, 4\n");
+    cStr += (strIndent + "lw $ra, 0($sp)\n" + strIndent + "addi $sp, $sp, 4\n");
 
     return cStr;
+  }
+
+  /**
+   * A function that replaces all occurrences of the pattern 
+   * ::: (TEXT A) (TEXT B) ::: 
+   * with <div class="(TEXT A)">(TEXT B)</div> 
+   */
+  markdownDivsToHTMLDivs(text: string): string {
+    
+    const pattern = /::: (.*?)[\n ]+(.*?)[\n ]+:::/g;
+    return text.replaceAll(pattern, '<div class="$1">\n$2\n</div>');
+  }
+
+  fakeListToList(text: string): string {
+    const pattern = /-/g;
+    return text.replaceAll(pattern, '\n\n - ');
+  }
+
+  pdfNewlineRemover(text: string): string {
+    text = text.replaceAll(".\n", "DOTNEWNt34#$@%#");
+    text = text.replaceAll("\n", " ");
+    text = text.replaceAll("DOTNEWNt34#$@%#", ".\n");
+    return text;
+  }
+
+  softWrapper(str: string): string {
+    const codeBlockRegex = /```[\s\S]*?```/g;
+    const codeBlocks = str.match(codeBlockRegex) || [];
+    str = str.replace(codeBlockRegex, '<CODEBLOCK>');
+  
+    const singleNewlineRegex = /(?<!\n)\n(?!\n)/g;
+    str = str.replace(singleNewlineRegex, '');
+  
+    codeBlocks.forEach((codeBlock) => {
+      str = str.replace('<CODEBLOCK>', codeBlock);
+    });
+  
+    return str;
+  }
+
+  plusMinus(text: string): string {
+    let t1 = text.replaceAll("±", "+").replaceAll("∓", "-");
+    let t2 = text.replaceAll("±", "-").replaceAll("∓", "+");
+
+    return `(${t2}) + i*(${t1})`  ; // t1 + "\n\n" + t2;
   }
 
 
